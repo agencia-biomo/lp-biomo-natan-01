@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biomo - Shader Background</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        #shader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .logo {
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: -3px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #d4a5e8 40%, #a800d2 70%, #7b00a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 40px rgba(168, 0, 210, 0.4));
+        }
+
+        .tagline {
+            font-size: 1.35rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 550px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+            font-weight: 300;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cta-button {
+            padding: 18px 44px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #7b00a0 0%, #a800d2 50%, #bf40e0 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(168, 0, 210, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(168, 0, 210, 0.6);
+        }
+
+        .cta-secondary {
+            padding: 18px 44px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-secondary:hover {
+            border-color: rgba(168, 0, 210, 0.7);
+            background: rgba(168, 0, 210, 0.15);
+        }
+
+        /* Shader Variations */
+        .shader-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+            background: rgba(0,0,0,0.5);
+            padding: 16px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .shader-controls label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .shader-controls select,
+        .shader-controls input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.7rem;
+            z-index: 100;
+        }
+
+        /* Social proof */
+        .social-proof {
+            margin-top: 60px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #c86bdb;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="shader-container"></div>
+
+    <div class="content">
+        <h1 class="logo">Biomo</h1>
+        <p class="tagline">Transformamos sua presença digital em resultados reais com sites profissionais, SEO e tráfego pago.</p>
+
+        <div class="cta-container">
+            <button class="cta-button">Solicitar Orçamento</button>
+            <button class="cta-secondary">Ver Resultados</button>
+        </div>
+
+        <div class="social-proof">
+            <div class="stat">
+                <div class="stat-number">+150</div>
+                <div class="stat-label">Projetos Entregues</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Satisfação</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Anos de Experiência</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="shader-controls">
+        <label>Estilo do Shader</label>
+        <select id="shaderStyle" onchange="changeShader(this.value)">
+            <option value="rings">Anéis Pulsantes</option>
+            <option value="waves">Ondas Fluidas</option>
+            <option value="mesh">Malha Orgânica</option>
+            <option value="vortex">Vórtice</option>
+        </select>
+        <label>Velocidade</label>
+        <input type="range" id="speed" min="0.01" max="0.15" step="0.01" value="0.05" onchange="updateSpeed(this.value)">
+    </div>
+
+    <div class="info">WebGL Shader | Biomo Redesign</div>
+
+    <script>
+        let renderer, scene, camera, mesh, uniforms;
+        let currentSpeed = 0.05;
+        let animationId;
+
+        // Vertex shader (comum para todos)
+        const vertexShader = `
+            void main() {
+                gl_Position = vec4(position, 1.0);
+            }
+        `;
+
+        // Fragment shaders
+        const shaders = {
+            // Anéis pulsantes roxos #a800d2
+            rings: `
+                #define TWO_PI 6.2831853072
+                #define PI 3.14159265359
+
+                precision highp float;
+                uniform vec2 resolution;
+                uniform float time;
+
+                void main(void) {
+                    vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+                    float lineWidth = 0.0024;
+
+                    vec3 color = vec3(0.0);
+
+                    // Cor alvo #a800d2: R=0.659, G=0.0, B=0.824
+                    for(int i = 0; i < 6; i++){
+                        float fi = float(i);
+
+                        // Velocidade variável: halos maiores (i maior) = mais lentos
+                        float speed = 0.06 / (1.0 + fi * 0.25);
+                        float t = time * speed;
+
+                        // Tamanho do halo aumenta com i
+                        float haloSize = 1.0 + fi * 0.4;
+
+                        float intensity = lineWidth * (fi * fi + 1.0) / abs(fract(t + fi * 0.08) * 5.0 * haloSize - length(uv) + mod(uv.x + uv.y, 0.2));
+
+                        // Proporção #a800d2
+                        color.r += intensity * 0.659;
+                        color.g += intensity * 0.0;
+                        color.b += intensity * 0.824;
+                    }
+
+                    // Mantém proporção roxo puro
+                    color.r = min(color.r, color.b * 0.8);
+
+                    // Escurece geral
+                    color *= 0.7;
+
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+
+            // Ondas fluidas - roxo #a800d2
+            waves: `
+                precision highp float;
+                uniform vec2 resolution;
+                uniform float time;
+
+                void main(void) {
+                    vec2 uv = (gl_FragCoord.xy - 0.5 * resolution.xy) / min(resolution.x, resolution.y);
+
+                    vec3 color = vec3(0.0);
+
+                    for(int i = 0; i < 8; i++) {
+                        float fi = float(i);
+
+                        // Velocidade variável: ondas maiores = mais lentas
+                        float speed = 0.04 / (1.0 + fi * 0.2);
+                        float t = time * speed;
+
+                        // Tamanho da onda aumenta
+                        float waveSize = 0.3 + fi * 0.12;
+
+                        vec2 p = uv;
+                        p.x += sin(p.y * 4.0 + t + fi * 0.5) * waveSize;
+                        p.y += cos(p.x * 3.0 + t * 1.2 + fi * 0.3) * waveSize;
+
+                        float d = length(p) - waveSize - fi * 0.06;
+                        float wave = 0.01 / abs(sin(d * 8.0 - t * 2.0));
+
+                        // Proporção #a800d2
+                        color.r += wave * 0.659;
+                        color.g += wave * 0.0;
+                        color.b += wave * 0.824;
+                    }
+
+                    // Mantém proporção roxo puro
+                    color.r = min(color.r, color.b * 0.8);
+
+                    color = clamp(color, 0.0, 1.0);
+                    color *= 0.6;
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+
+            // Malha orgânica - roxo #a800d2
+            mesh: `
+                precision highp float;
+                uniform vec2 resolution;
+                uniform float time;
+
+                float hash(vec2 p) {
+                    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+                }
+
+                float noise(vec2 p) {
+                    vec2 i = floor(p);
+                    vec2 f = fract(p);
+                    f = f * f * (3.0 - 2.0 * f);
+
+                    float a = hash(i);
+                    float b = hash(i + vec2(1.0, 0.0));
+                    float c = hash(i + vec2(0.0, 1.0));
+                    float d = hash(i + vec2(1.0, 1.0));
+
+                    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+                }
+
+                void main(void) {
+                    vec2 uv = gl_FragCoord.xy / resolution.xy;
+
+                    vec3 color = vec3(0.0);
+
+                    // Múltiplas camadas com velocidades diferentes
+                    for(int layer = 0; layer < 3; layer++) {
+                        float fl = float(layer);
+
+                        // Velocidade: camadas maiores = mais lentas
+                        float speed = 0.025 / (1.0 + fl * 0.4);
+                        float t = time * speed;
+
+                        // Escala da malha aumenta por camada
+                        float scale = 6.0 + fl * 4.0;
+                        vec2 p = uv * scale;
+
+                        float n = 0.0;
+                        float amp = 1.0;
+                        for(int i = 0; i < 4; i++) {
+                            n += noise(p + t) * amp;
+                            p *= 2.0;
+                            amp *= 0.5;
+                        }
+
+                        // Grid lines
+                        float gridSize = 20.0 - fl * 5.0;
+                        vec2 grid = abs(fract(uv * gridSize + n * 0.5) - 0.5);
+                        float line = min(grid.x, grid.y);
+                        line = smoothstep(0.0, 0.05, line);
+
+                        // Proporção #a800d2
+                        float intensity = (1.0 - line) * 0.3 + n * 0.08;
+                        color.r += intensity * 0.659;
+                        color.b += intensity * 0.824;
+                    }
+
+                    // Mantém proporção roxo puro
+                    color.r = min(color.r, color.b * 0.8);
+                    color.g = 0.0;
+
+                    // Fundo escuro roxo
+                    color = mix(vec3(0.02, 0.0, 0.03), color, 0.5);
+
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+
+            // Vórtice - roxo #a800d2
+            vortex: `
+                precision highp float;
+                uniform vec2 resolution;
+                uniform float time;
+
+                #define PI 3.14159265359
+
+                void main(void) {
+                    vec2 uv = (gl_FragCoord.xy - 0.5 * resolution.xy) / min(resolution.x, resolution.y);
+
+                    float angle = atan(uv.y, uv.x);
+                    float radius = length(uv);
+
+                    vec3 color = vec3(0.0);
+
+                    for(int i = 0; i < 6; i++) {
+                        float fi = float(i);
+
+                        // Velocidade variável: espirais maiores = mais lentas
+                        float speed = 0.05 / (1.0 + fi * 0.3);
+                        float t = time * speed;
+
+                        // Raio da espiral aumenta
+                        float spiralRadius = 1.0 + fi * 0.3;
+
+                        // Spiral distortion com tamanho variável
+                        float localAngle = angle + radius * (3.0 - fi * 0.3) - t * 2.0;
+
+                        float spiral = sin(localAngle * (3.0 + fi) + t * (1.0 + fi * 0.15)) * 0.5 + 0.5;
+                        float ring = abs(sin(radius * (10.0 - fi) - t * (3.0 - fi * 0.4) + fi));
+
+                        float intensity = 0.01 / (abs(spiral - 0.5) + 0.1) * ring;
+                        intensity *= smoothstep(1.5 * spiralRadius, 0.0, radius);
+
+                        // Proporção #a800d2
+                        color.r += intensity * 0.659;
+                        color.g += intensity * 0.0;
+                        color.b += intensity * 0.824;
+                    }
+
+                    // Brilho central sutil - roxo #a800d2
+                    float glow = 0.05 / (radius + 0.15);
+                    color += vec3(0.659, 0.0, 0.824) * glow * 0.15;
+
+                    // Mantém proporção roxo puro
+                    color.r = min(color.r, color.b * 0.8);
+
+                    color = clamp(color, 0.0, 1.0);
+                    color *= 0.65;
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `
+        };
+
+        function init(fragmentShader) {
+            const container = document.getElementById('shader-container');
+
+            // Limpa anterior se existir
+            if (renderer) {
+                cancelAnimationFrame(animationId);
+                container.removeChild(renderer.domElement);
+                renderer.dispose();
+            }
+
+            camera = new THREE.Camera();
+            camera.position.z = 1;
+
+            scene = new THREE.Scene();
+            const geometry = new THREE.PlaneGeometry(2, 2);
+
+            uniforms = {
+                time: { type: "f", value: 1.0 },
+                resolution: { type: "v2", value: new THREE.Vector2() }
+            };
+
+            const material = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: vertexShader,
+                fragmentShader: fragmentShader
+            });
+
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            container.appendChild(renderer.domElement);
+
+            onWindowResize();
+            window.addEventListener('resize', onWindowResize, false);
+
+            animate();
+        }
+
+        function onWindowResize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            uniforms.resolution.value.x = renderer.domElement.width;
+            uniforms.resolution.value.y = renderer.domElement.height;
+        }
+
+        function animate() {
+            animationId = requestAnimationFrame(animate);
+            uniforms.time.value += currentSpeed;
+            renderer.render(scene, camera);
+        }
+
+        function changeShader(style) {
+            init(shaders[style]);
+        }
+
+        function updateSpeed(value) {
+            currentSpeed = parseFloat(value);
+        }
+
+        // Inicializa com o shader de anéis
+        init(shaders.rings);
+    </script>
+</body>
+</html>
