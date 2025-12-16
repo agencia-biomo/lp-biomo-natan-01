@@ -107,13 +107,19 @@
         }
 
         .logo {
-            font-family: var(--font-heading);
-            font-size: 1.75rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff 0%, var(--color-primary-light) 50%, var(--color-primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        @media (min-width: 768px) {
+            .logo img {
+                height: 48px;
+            }
         }
 
         .nav {
@@ -444,7 +450,9 @@
         <!-- Header -->
         <header class="header" id="header">
             <div class="header-container">
-                <a href="#" class="logo">Biomo</a>
+                <a href="#" class="logo">
+                    <img src="/assets/logo-biomo-mini.svg" alt="Biomo - Agência de Marketing Digital">
+                </a>
 
                 <nav class="nav">
                     <a href="#servicos">Serviços</a>
@@ -465,6 +473,9 @@
         <!-- Hero Section -->
         <section class="hero" id="hero">
             <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="/assets/logo-biomo.svg" alt="Biomo" style="width: 180px; height: auto; margin-bottom: 32px;">
+                </div>
                 <h1>Transformamos sua presença digital em resultados reais</h1>
                 <p>Agência de Marketing Digital Full Service com Garantia Total de satisfação. Sites profissionais, SEO e Tráfego Pago que convertem.</p>
 
@@ -539,6 +550,9 @@
 
         <!-- Footer -->
         <footer class="footer">
+            <div class="footer-logo">
+                <img src="/assets/logo-biomo-mini.svg" alt="Biomo" style="height: 36px; margin-bottom: 16px;">
+            </div>
             <p>&copy; 2024 Biomo - Agência de Marketing Digital. Todos os direitos reservados.</p>
             <p style="margin-top: 8px;"><a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
         </footer>

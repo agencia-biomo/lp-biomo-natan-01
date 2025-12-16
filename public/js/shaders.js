@@ -33,7 +33,8 @@
                 float fi = float(i);
 
                 // Velocidade variável: halos maiores (i maior) = mais lentos
-                float speed = 0.06 / (1.0 + fi * 0.25);
+                // Velocidade base reduzida para 25% (0.015 ao invés de 0.06)
+                float speed = 0.015 / (1.0 + fi * 0.25);
                 float t = time * speed;
 
                 // Tamanho do halo aumenta com i
