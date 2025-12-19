@@ -13,7 +13,7 @@
         }
     `;
 
-    // Fragment shader - Anéis Pulsantes Roxos #a800d2
+    // Fragment shader - Anéis Pulsantes Roxos #a800d2 com Parallax
     const fragmentShader = `
         #define TWO_PI 6.2831853072
         #define PI 3.14159265359
@@ -21,9 +21,12 @@
         precision highp float;
         uniform vec2 resolution;
         uniform float time;
+        uniform float scrollOffset;
 
         void main(void) {
             vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+            // Parallax: deslocar UV verticalmente baseado no scroll
+            uv.y += scrollOffset * 0.3;
             float lineWidth = 0.0024;
 
             vec3 color = vec3(0.0);
@@ -85,7 +88,8 @@
         // Uniforms
         uniforms = {
             time: { type: "f", value: 1.0 },
-            resolution: { type: "v2", value: new THREE.Vector2() }
+            resolution: { type: "v2", value: new THREE.Vector2() },
+            scrollOffset: { type: "f", value: 0.0 }
         };
 
         // Material
@@ -113,8 +117,20 @@
         window.addEventListener('resize', onWindowResize, false);
         onWindowResize();
 
+        // Scroll handler for parallax
+        window.addEventListener('scroll', onScroll, { passive: true });
+
         // Start animation
         animate();
+    }
+
+    /**
+     * Handler de scroll para parallax
+     */
+    function onScroll() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        uniforms.scrollOffset.value = scrollY / maxScroll;
     }
 
     /**

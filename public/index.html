@@ -88,14 +88,14 @@
             right: 0;
             z-index: 100;
             padding: 20px 24px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
         .header.scrolled {
             padding: 12px 24px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.92);
         }
 
         .header-container {
@@ -327,16 +327,17 @@
         }
 
         .service-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 40px 32px;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .service-card:hover {
-            background: rgba(168, 0, 210, 0.08);
-            border-color: rgba(168, 0, 210, 0.3);
+            background: rgba(0, 0, 0, 0.7);
+            border-color: rgba(168, 0, 210, 0.4);
             transform: translateY(-5px);
         }
 
@@ -450,9 +451,10 @@
         .differential-item {
             text-align: center;
             padding: 40px 24px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
@@ -488,11 +490,12 @@
         }
 
         .result-card {
-            background: linear-gradient(135deg, rgba(168, 0, 210, 0.15), rgba(168, 0, 210, 0.05));
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
             border: 1px solid rgba(168, 0, 210, 0.3);
             border-radius: 20px;
             padding: 32px;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .result-card:hover {
@@ -554,15 +557,16 @@
         }
 
         .testimonial-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 32px;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .testimonial-card:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.7);
             transform: translateY(-3px);
         }
 
@@ -869,7 +873,7 @@
                     <a href="#contato">Contato</a>
                 </nav>
 
-                <button class="header-cta">Orçamento</button>
+                <button class="header-cta" onclick="openQuoteModal()">Orçamento</button>
 
                 <button class="menu-toggle" aria-label="Menu">
                     <span></span>
@@ -879,43 +883,74 @@
             </div>
         </header>
 
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Fechar menu">×</button>
+            <a href="#servicos" class="mobile-menu-link">Serviços</a>
+            <a href="#diferenciais" class="mobile-menu-link">Diferenciais</a>
+            <a href="#resultados" class="mobile-menu-link">Resultados</a>
+            <a href="#faq" class="mobile-menu-link">FAQ</a>
+            <a href="#contato" class="mobile-menu-link">Contato</a>
+            <button class="mobile-menu-cta" onclick="openQuoteModal(); closeMobileMenu();">Solicitar Orçamento</button>
+        </div>
+
         <!-- Hero Section -->
         <section class="hero" id="hero">
             <div class="hero-content">
                 <div class="hero-logo">
-                    <img src="/assets/logo-biomo.svg" alt="Biomo" style="width: 180px; height: auto; margin-bottom: 32px;">
+                    <img src="/assets/logo-biomo.svg" alt="Biomo" style="width: clamp(120px, 25vw, 180px); height: auto; margin-bottom: 32px;">
                 </div>
                 <h1>Transformamos sua presença digital em resultados reais</h1>
                 <p>Agência de Marketing Digital Full Service com Garantia Total de satisfação. Sites profissionais, SEO e Tráfego Pago que convertem.</p>
 
                 <div class="hero-ctas">
-                    <a href="#contato" class="btn-primary">Solicitar Orçamento</a>
+                    <button type="button" class="btn-primary" onclick="openQuoteModal()">Solicitar Orçamento</button>
                     <a href="#resultados" class="btn-secondary">Ver Resultados</a>
                 </div>
 
                 <div class="social-proof">
                     <div class="stat">
-                        <div class="stat-number">+150</div>
+                        <div class="stat-number" data-value="150">+0</div>
                         <div class="stat-label">Projetos Entregues</div>
+                        <div class="stat-context">em 5 anos</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number">98%</div>
+                        <div class="stat-number stat-percent" data-value="98">0%</div>
                         <div class="stat-label">Satisfação</div>
+                        <div class="stat-context">NPS médio</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number">5+</div>
+                        <div class="stat-number" data-value="5">+0</div>
                         <div class="stat-label">Anos de Experiência</div>
+                        <div class="stat-context">desde 2019</div>
                     </div>
+                </div>
+
+                <!-- Badges de Certificação -->
+                <div class="certification-badges">
+                    <div class="badge">
+                        <span class="badge-icon">🏆</span>
+                        <span class="badge-text">Google Partner</span>
+                    </div>
+                    <div class="badge">
+                        <span class="badge-icon">📱</span>
+                        <span class="badge-text">Meta Business</span>
+                    </div>
+                    <a href="https://share.google/eCYIhrFlaLVZNJsSb" target="_blank" rel="noopener noreferrer" class="badge" style="text-decoration: none; color: inherit;">
+                        <span class="badge-icon">⭐</span>
+                        <span class="badge-text">5.0 Google Reviews</span>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Services Section -->
-        <section class="services" id="servicos">
+        <section class="services" id="servicos" aria-labelledby="servicos-titulo">
             <div class="section-container">
                 <div class="section-header">
-                    <h2>Nossos Serviços</h2>
+                    <h2 id="servicos-titulo">Nossos Serviços</h2>
                     <p>Soluções completas para transformar sua presença digital e gerar resultados mensuráveis.</p>
+                    <p style="margin-top: 12px; color: var(--color-primary-light); font-weight: 600; font-size: 1.1rem;">A partir de R$ 993</p>
                 </div>
 
                 <div class="services-grid">
@@ -956,10 +991,10 @@
         </section>
 
         <!-- Diferenciais Section -->
-        <section class="differentials" id="diferenciais">
+        <section class="differentials" id="diferenciais" aria-labelledby="diferenciais-titulo">
             <div class="section-container">
                 <div class="section-header">
-                    <h2>Por que escolher a Biomo?</h2>
+                    <h2 id="diferenciais-titulo">Por que escolher a Biomo?</h2>
                     <p>Diferenciais que fazem da Biomo a escolha certa para o seu negócio digital.</p>
                 </div>
 
@@ -992,10 +1027,10 @@
         </section>
 
         <!-- Resultados Section -->
-        <section class="results" id="resultados">
+        <section class="results" id="resultados" aria-labelledby="resultados-titulo">
             <div class="section-container">
                 <div class="section-header">
-                    <h2>Resultados que falam por si</h2>
+                    <h2 id="resultados-titulo">Resultados que falam por si</h2>
                     <p>Cases reais de clientes que transformaram sua presença digital com a Biomo.</p>
                 </div>
 
@@ -1061,11 +1096,11 @@
         </section>
 
         <!-- Depoimentos Section -->
-        <section class="testimonials" id="depoimentos">
+        <section class="testimonials" id="depoimentos" aria-labelledby="depoimentos-titulo">
             <div class="section-container">
                 <div class="section-header">
-                    <h2>O que nossos clientes dizem</h2>
-                    <p>Depoimentos reais de empresas que cresceram com a Biomo.</p>
+                    <h2 id="depoimentos-titulo">O que nossos clientes dizem</h2>
+                    <p>Avaliações reais do Google - <a href="https://share.google/eCYIhrFlaLVZNJsSb" target="_blank" rel="noopener noreferrer" style="color: var(--color-primary-light); text-decoration: none;">Nota 5.0 ★</a></p>
                 </div>
 
                 <div class="testimonials-grid">
@@ -1108,11 +1143,71 @@
             </div>
         </section>
 
-        <!-- FAQ Section -->
-        <section class="faq" id="faq">
+        <!-- Video Proofs Section -->
+        <section class="video-proofs" id="videos" aria-labelledby="videos-titulo">
             <div class="section-container">
                 <div class="section-header">
-                    <h2>Perguntas Frequentes</h2>
+                    <h2 id="videos-titulo">Resultados em Vídeo</h2>
+                    <p>Veja depoimentos reais de clientes satisfeitos com nosso trabalho.</p>
+                </div>
+
+                <div class="videos-grid">
+                    <!-- Video 1 - VM Eventos -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <iframe
+                                src="https://player.vimeo.com/video/1126950771?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+                                allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                title="VM Eventos">
+                            </iframe>
+                        </div>
+                        <div class="video-info">
+                            <h4>VM Eventos</h4>
+                            <p>Depoimento de cliente satisfeito</p>
+                        </div>
+                    </div>
+
+                    <!-- Video 2 - Med Menosso -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <iframe
+                                src="https://player.vimeo.com/video/1128324994?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+                                allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                title="Med Menosso">
+                            </iframe>
+                        </div>
+                        <div class="video-info">
+                            <h4>Med Menosso</h4>
+                            <p>Depoimento de cliente satisfeito</p>
+                        </div>
+                    </div>
+
+                    <!-- Video 3 - Eliore Studio -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <iframe
+                                src="https://player.vimeo.com/video/1127665257?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+                                allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                title="Eliore Studio">
+                            </iframe>
+                        </div>
+                        <div class="video-info">
+                            <h4>Eliore Studio</h4>
+                            <p>Depoimento de cliente satisfeito</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq" id="faq" aria-labelledby="faq-titulo">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 id="faq-titulo">Perguntas Frequentes</h2>
                     <p>Tire suas dúvidas sobre nossos serviços.</p>
                 </div>
 
@@ -1171,10 +1266,10 @@
         </section>
 
         <!-- Contato Section -->
-        <section class="contact" id="contato">
+        <section class="contact" id="contato" aria-labelledby="contato-titulo">
             <div class="section-container">
                 <div class="section-header">
-                    <h2>Vamos conversar?</h2>
+                    <h2 id="contato-titulo">Vamos conversar?</h2>
                     <p>Entre em contato e descubra como podemos transformar seu negócio digital.</p>
                 </div>
 
@@ -1188,7 +1283,7 @@
                                 <div class="contact-method-icon">📱</div>
                                 <div>
                                     <div class="contact-method-label">WhatsApp</div>
-                                    <div class="contact-method-text">(11) 99999-9999</div>
+                                    <div class="contact-method-text">(47) 99606-7992</div>
                                 </div>
                             </div>
 
@@ -1196,7 +1291,7 @@
                                 <div class="contact-method-icon">📧</div>
                                 <div>
                                     <div class="contact-method-label">E-mail</div>
-                                    <div class="contact-method-text">contato@biomo.com.br</div>
+                                    <div class="contact-method-text">thiago@biomo.com.br</div>
                                 </div>
                             </div>
 
@@ -1204,12 +1299,12 @@
                                 <div class="contact-method-icon">📍</div>
                                 <div>
                                     <div class="contact-method-label">Localização</div>
-                                    <div class="contact-method-text">São Paulo, SP</div>
+                                    <div class="contact-method-text">Balneário Camboriú - SC</div>
                                 </div>
                             </div>
                         </div>
 
-                        <a href="https://wa.me/5511999999999" class="btn-whatsapp" target="_blank" rel="noopener">
+                        <a href="https://wa.me/5547996067992?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Biomo%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20servi%C3%A7os." class="btn-whatsapp" target="_blank" rel="noopener">
                             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                             </svg>
@@ -1261,8 +1356,13 @@
             <div class="footer-logo">
                 <img src="/assets/logo-biomo-mini.svg" alt="Biomo" style="height: 36px; margin-bottom: 16px;">
             </div>
+            <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: 8px;">Balneário Camboriú - SC, Brasil</p>
+            <p style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 12px;">
+                <a href="mailto:thiago@biomo.com.br" style="color: rgba(255,255,255,0.6);">thiago@biomo.com.br</a> |
+                <a href="https://wa.me/5547996067992" style="color: rgba(255,255,255,0.6);">(47) 99606-7992</a>
+            </p>
             <p>&copy; 2024 Biomo - Agência de Marketing Digital. Todos os direitos reservados.</p>
-            <p style="margin-top: 8px;"><a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
+            <p style="margin-top: 8px;"><a href="/privacidade.html">Política de Privacidade</a> | <a href="/termos.html">Termos de Uso</a></p>
         </footer>
 
     </div>
@@ -1277,7 +1377,7 @@
     </div>
 
     <!-- WhatsApp Float -->
-    <a href="https://wa.me/5500000000000" class="whatsapp-float" id="whatsappFloat" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <a href="https://wa.me/5547996067992?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Biomo%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20servi%C3%A7os." class="whatsapp-float" id="whatsappFloat" target="_blank" rel="noopener" aria-label="WhatsApp">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
@@ -1288,6 +1388,9 @@
 
     <!-- Shaders -->
     <script src="/js/shaders.js"></script>
+
+    <!-- Quote Modal -->
+    <script src="/js/quote-modal.js"></script>
 
     <!-- Main JS -->
     <script>
@@ -1300,6 +1403,40 @@
                 header.classList.remove('scrolled');
             }
         });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            menuToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', openMobileMenu);
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+
+            // Close menu when clicking a link
+            mobileMenu.querySelectorAll('.mobile-menu-link').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+            });
+        }
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1331,6 +1468,78 @@
             }
         }
 
+        // Scroll Reveal Animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const revealCallback = (entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add staggered delay based on element position
+                    const delay = entry.target.dataset.delay || (index * 100);
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, delay);
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, observerOptions);
+
+        // Observe all elements with reveal class
+        document.querySelectorAll('.service-card, .result-card, .differential-item, .testimonial, .faq-item, .video-card').forEach((el, index) => {
+            el.classList.add('scroll-reveal');
+            el.dataset.delay = index % 3 * 100; // Stagger within groups
+            revealObserver.observe(el);
+        });
+
+        // Animated Numbers
+        function animateNumber(element, start, end, duration, isPercent = false) {
+            const startTime = performance.now();
+            const range = end - start;
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Easing function (ease-out)
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(start + range * easeOut);
+
+                if (isPercent) {
+                    element.textContent = current + '%';
+                } else {
+                    element.textContent = '+' + current;
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        const numberObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const value = parseInt(el.dataset.value);
+                    const isPercent = el.classList.contains('stat-percent');
+                    animateNumber(el, 0, value, 1500, isPercent);
+                    numberObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-number[data-value]').forEach(el => {
+            numberObserver.observe(el);
+        });
+
         // Contact Form Handler
         const contactForm = document.getElementById('contactForm');
         if (contactForm) {
@@ -1354,7 +1563,7 @@
                     const message = `Olá! Gostaria de um orçamento.\n\n*Nome:* ${data.name}\n*E-mail:* ${data.email}\n*WhatsApp:* ${data.phone}\n*Serviço:* ${data.service}\n*Mensagem:* ${data.message || 'Não informada'}`;
 
                     // Open WhatsApp with pre-filled message
-                    const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
+                    const whatsappUrl = `https://wa.me/5547996067992?text=${encodeURIComponent(message)}`;
                     window.open(whatsappUrl, '_blank');
 
                     // Reset form and button
@@ -1368,15 +1577,7 @@
             });
         }
 
-        // Header CTA button
-        document.querySelector('.header-cta').addEventListener('click', function() {
-            document.querySelector('#contato').scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        });
-
-        // WhatsApp Popup Controller
+        // WhatsApp Popup Controller (Inteligente: scroll 30% OU 15s)
         (function() {
             const popup = document.getElementById('whatsappPopup');
             const closeBtn = document.getElementById('whatsappPopupClose');
@@ -1386,14 +1587,29 @@
 
             const wasClosedKey = 'biomo_whatsapp_popup_closed';
             let popupDismissed = sessionStorage.getItem(wasClosedKey) === 'true';
+            let popupShown = false;
 
-            // Show popup after 3 seconds (if not dismissed)
+            const showPopup = () => {
+                if (!popupDismissed && !popupShown) {
+                    popup.classList.add('active');
+                    popupShown = true;
+                }
+            };
+
+            // Trigger 1: Scroll 30% da página
+            const handleScroll = () => {
+                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                if (scrollPercent >= 30) {
+                    showPopup();
+                    window.removeEventListener('scroll', handleScroll);
+                }
+            };
+
+            // Trigger 2: 15 segundos na página
+            const timeoutId = setTimeout(showPopup, 15000);
+
             if (!popupDismissed) {
-                setTimeout(function() {
-                    if (!popupDismissed) {
-                        popup.classList.add('active');
-                    }
-                }, 3000);
+                window.addEventListener('scroll', handleScroll, { passive: true });
             }
 
             // Close popup when clicking the X button
