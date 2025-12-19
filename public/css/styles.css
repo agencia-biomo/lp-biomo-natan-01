@@ -545,9 +545,107 @@
    Print Styles
    =========================== */
 
+/* ===========================
+   WhatsApp Popup - Balão de Fala Fluido
+   =========================== */
+
+.whatsapp-popup {
+    position: fixed;
+    bottom: 95px;
+    right: 24px;
+    max-width: 220px;
+    background: #ffffff;
+    border-radius: 20px 20px 20px 6px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.whatsapp-popup.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Cauda do balão - estilo orgânico */
+.whatsapp-popup::before {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    right: 18px;
+    width: 24px;
+    height: 24px;
+    background: #ffffff;
+    border-radius: 0 0 20px 0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.whatsapp-popup::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    right: 16px;
+    width: 20px;
+    height: 12px;
+    background: #ffffff;
+    border-radius: 0 0 12px 0;
+}
+
+.whatsapp-popup-message {
+    color: #1a1a1a;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.whatsapp-popup-heart {
+    color: #a800d2;
+    margin-left: 2px;
+}
+
+.whatsapp-popup-close {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: #999;
+    line-height: 1;
+}
+
+.whatsapp-popup-close:hover {
+    background: #f5f5f5;
+    color: #666;
+    transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .whatsapp-popup {
+        right: 16px;
+        bottom: 85px;
+        max-width: 200px;
+    }
+}
+
 @media print {
     #shader-bg,
     .whatsapp-float,
+    .whatsapp-popup,
     .header {
         display: none !important;
     }
