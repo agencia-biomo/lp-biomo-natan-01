@@ -32,6 +32,14 @@ lp-biomo-natan-01/
 │   └── js/                 # Scripts
 │       └── shaders.js
 ├── docs/                    # Documentação
+│   ├── ARQUITETURA.md      # Stack e estrutura do projeto
+│   ├── COMPONENTES.md      # Documentação de componentes
+│   ├── ESTILOS.md          # Sistema de cores e tipografia
+│   ├── FUNCIONALIDADES.md  # Features implementadas
+│   ├── DEPLOY.md           # Instruções de deploy
+│   ├── CHANGELOG.md        # Histórico de versões
+│   ├── PROCESSO_CRIATIVO.md # Processo criativo detalhado
+│   ├── DIARIO_PROMPTS.md   # Metodologia de trabalho
 │   ├── REDESIGN.md         # Proposta de redesign
 │   └── SHADERS.md          # Documentação dos shaders
 ├── firebase.json           # Configuração Firebase
