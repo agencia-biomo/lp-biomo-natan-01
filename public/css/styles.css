@@ -4,17 +4,50 @@
  */
 
 /* ===========================
-   Animações
+   Animações Avançadas
    =========================== */
 
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -23,9 +56,41 @@
     to { opacity: 1; }
 }
 
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(168, 0, 210, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(168, 0, 210, 0.6); }
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* ===========================
@@ -517,9 +582,56 @@
 }
 
 /* ===========================
-   Scroll Animations
+   Scroll Animations - Enhanced
    =========================== */
 
+/* Base hidden state for all animated elements */
+[data-animate] {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-animate="fade-up"] {
+    transform: translateY(50px);
+}
+
+[data-animate="fade-down"] {
+    transform: translateY(-50px);
+}
+
+[data-animate="fade-left"] {
+    transform: translateX(-50px);
+}
+
+[data-animate="fade-right"] {
+    transform: translateX(50px);
+}
+
+[data-animate="scale"] {
+    transform: scale(0.9);
+}
+
+[data-animate="blur"] {
+    filter: blur(10px);
+    transform: translateY(20px);
+}
+
+/* Visible state */
+[data-animate].is-visible {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+    filter: blur(0);
+}
+
+/* Staggered animation delays */
+[data-animate-delay="100"] { transition-delay: 100ms; }
+[data-animate-delay="200"] { transition-delay: 200ms; }
+[data-animate-delay="300"] { transition-delay: 300ms; }
+[data-animate-delay="400"] { transition-delay: 400ms; }
+[data-animate-delay="500"] { transition-delay: 500ms; }
+[data-animate-delay="600"] { transition-delay: 600ms; }
+
+/* Legacy support */
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(30px);
@@ -694,6 +806,232 @@ select:focus-visible {
         padding: 8px 12px;
         font-size: 0.75rem;
     }
+}
+
+/* ===========================
+   Enhanced Card Styles
+   =========================== */
+
+.service-card,
+.result-card,
+.testimonial-card,
+.differential-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before,
+.result-card::before,
+.testimonial-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), #00d3d3);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.service-card:hover::before,
+.result-card:hover::before,
+.testimonial-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Glassmorphism effect */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ===========================
+   Enhanced Card Backgrounds
+   =========================== */
+
+/* Increase card opacity for better readability over shader background */
+.service-card {
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.result-card,
+.testimonial-card {
+    background: rgba(0, 0, 0, 0.65) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.differential-item,
+.faq-item {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.contact-form {
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Section backgrounds for better contrast */
+.services,
+.differentials,
+.results,
+.testimonials,
+.contact {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Table rows in comparison section */
+tbody tr td {
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* KPI cards */
+.section-container [style*="text-align: center"][style*="padding: 32px"] {
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* ===========================
+   Enhanced Section Headers
+   =========================== */
+
+.section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+}
+
+.section-badge--purple {
+    background: rgba(168, 0, 210, 0.15);
+    border: 1px solid rgba(168, 0, 210, 0.3);
+    color: #c86bdb;
+}
+
+.section-badge--cyan {
+    background: rgba(0, 211, 211, 0.1);
+    border: 1px solid rgba(0, 211, 211, 0.3);
+    color: #00d3d3;
+}
+
+.section-badge--emerald {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.section-badge--pink {
+    background: rgba(236, 72, 153, 0.1);
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    color: #ec4899;
+}
+
+/* ===========================
+   Enhanced Gradient Text
+   =========================== */
+
+.gradient-text-purple {
+    background: linear-gradient(135deg, #a800d2, #c86bdb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text-cyan {
+    background: linear-gradient(135deg, #00d3d3, #00a0a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text-mixed {
+    background: linear-gradient(135deg, #a800d2, #00d3d3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===========================
+   Enhanced Hover Effects
+   =========================== */
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hover-glow {
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 30px rgba(168, 0, 210, 0.4);
+}
+
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* ===========================
+   Background Effects
+   =========================== */
+
+.bg-blur-circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+}
+
+.bg-blur-circle--purple {
+    background: rgba(168, 0, 210, 0.2);
+}
+
+.bg-blur-circle--cyan {
+    background: rgba(0, 211, 211, 0.15);
+}
+
+/* Section gradient overlays */
+.section-gradient {
+    position: relative;
+}
+
+.section-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.section-gradient--purple::before {
+    background: linear-gradient(180deg, rgba(168, 0, 210, 0.05) 0%, transparent 50%, rgba(168, 0, 210, 0.03) 100%);
+}
+
+.section-gradient--cyan::before {
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 211, 211, 0.05) 50%, transparent 100%);
 }
 
 /* ===========================
